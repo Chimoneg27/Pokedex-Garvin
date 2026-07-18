@@ -1,7 +1,7 @@
-@if (allPokemon.isLoading()) {
+@if (laoding()) {
 <div class="loading-spinner">Loading Pokemon...</div>
-} @else if (allPokemon.error()) {
-<div class="error">{{ allPokemon.error() }}</div>
+} @else if (error()) {
+<div class="error">{{ error() }}</div>
 } @else {
 @for(pokemon of dataSource(); track pokemon.name) {
 <h2>name: {{ pokemon.name }}</h2>
