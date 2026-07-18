@@ -14,6 +14,8 @@ import {
   MatRowDef,
 } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
+import {Chart, registerables} from 'chart.js';
+Chart.register(...registerables)
 
 @Component({
   selector: 'app-pokedex-table',
@@ -92,6 +94,19 @@ export class PokedexTable {
         }
       }),
     );
+  }
+
+  // card logic goes here
+  selectedPokemon = signal<PokemonRow | null>(null)
+
+  onClickRow(pokemon: PokemonRow) {
+  this.selectedPokemon.set(
+    this.selectedPokemon()?.name === pokemon.name ? null : pokemon
+  );
+}
+
+   closeCard() {
+    this.selectedPokemon.set(null);
   }
 }
 
