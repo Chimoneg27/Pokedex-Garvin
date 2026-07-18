@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from "./components/header/header";
-import { Pokedex } from './pokedex/pokedex';
+import { Pokedex } from './products/pokedex/pokedex';
 
 @Component({
   selector: 'app-root',
