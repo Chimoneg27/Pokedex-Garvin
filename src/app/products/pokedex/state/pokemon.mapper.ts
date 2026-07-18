@@ -13,6 +13,7 @@ export function mapToRows(rawData: any[]): PokemonRow[] {
     const speed = getStat('speed');
 
     return {
+      id: raw.id,
       name: raw.name,
       sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${raw.id}.png`,
       types: raw.pokemon_v2_pokemontypes.map((t: any) => t.pokemon_v2_type.name).join(', '),

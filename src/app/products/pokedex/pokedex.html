@@ -3,7 +3,7 @@
 } @else if (error()) {
 <div class="error">{{ error() }}</div>
 } @else {
-@for(pokemon of dataSource(); track pokemon.name) {
+@for(pokemon of dataSource(); track pokemon.id) {
 <h2>name: {{ pokemon.name }}</h2>
 
 <h3>type: {{ pokemon.types }}</h3>
