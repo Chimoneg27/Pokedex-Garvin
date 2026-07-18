@@ -6,19 +6,21 @@ import { GET_POKEMON } from '../../services/graphql/queries';
 import { PokemonStore } from './state/pokemon.store';
 import { selectPokemon, selectLoading, selectError } from './state/pokemon.selectors';
 import { mapToRows } from './state/pokemon.mapper';
+import { PokedexTable } from '../../components/pokedex-table/pokedex-table';
 
 @Component({
   selector: 'app-pokedex',
-  imports: [MatTableModule],
+  imports: [MatTableModule, PokedexTable],
   templateUrl: './pokedex.html',
   styleUrl: './pokedex.css',
 })
+
 export class Pokedex {
   private apollo = inject(Apollo);
   private store = inject(PokemonStore);
 
   protected readonly dataSource = toSignal(selectPokemon(this.store), { initialValue: [] });
-  protected readonly laoding = toSignal(selectLoading(this.store), { initialValue: false });
+  protected readonly loading = toSignal(selectLoading(this.store), { initialValue: false });
   protected readonly error = toSignal(selectError(this.store), { initialValue: null });
 
   constructor() {
