@@ -1,46 +1,46 @@
-<table mat-table [dataSource]="dataSource" class=" border-solid border-black border! mt-5 ml-4 rounded-3xl!">
+<table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="sortedData()" class=" border-solid border-black border! mt-5 ml-4 rounded-3xl!">
   <ng-container matColumnDef="sprite">
-    <th mat-header-cell *matHeaderCellDef>Sprite</th>
+    <th mat-sort-header="sprite" mat-header-cell *matHeaderCellDef>Sprite</th>
     <td mat-cell *matCellDef="let element"><img [src]="element.sprite" width="48" height="48" /></td>
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">{{ element.name }}</td>
   </ng-container>
 
   <ng-container matColumnDef="types">
-    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <th mat-sort-header="types" mat-header-cell *matHeaderCellDef>Type</th>
     <td mat-cell *matCellDef="let element">{{ element.types }}</td>
   </ng-container>
 
   <ng-container matColumnDef="hp">
-    <th mat-header-cell *matHeaderCellDef>Hp</th>
+    <th mat-sort-header="hp" mat-header-cell *matHeaderCellDef>Hp</th>
     <td mat-cell *matCellDef="let element">{{ element.hp }}</td>
   </ng-container>
 
   <ng-container matColumnDef="attack">
-    <th mat-header-cell *matHeaderCellDef>Attack</th>
+    <th mat-sort-header="attack" mat-header-cell *matHeaderCellDef>Attack</th>
     <td mat-cell *matCellDef="let element">{{ element.attack }}</td>
   </ng-container>
 
   <ng-container matColumnDef="spAtk">
-    <th mat-header-cell *matHeaderCellDef>SpAtk</th>
+    <th mat-sort-header="spAtk" mat-header-cell *matHeaderCellDef>SpAtk</th>
     <td mat-cell *matCellDef="let element">{{ element.spAtk }}</td>
   </ng-container>
 
   <ng-container matColumnDef="spDef">
-    <th mat-header-cell *matHeaderCellDef>spDef</th>
+    <th mat-sort-header="spDef" mat-header-cell *matHeaderCellDef>spDef</th>
     <td mat-cell *matCellDef="let element">{{ element.spDef }}</td>
   </ng-container>
 
   <ng-container matColumnDef="speed">
-    <th mat-header-cell *matHeaderCellDef>Speed</th>
+    <th mat-sort-header="speed" mat-header-cell *matHeaderCellDef>Speed</th>
     <td mat-cell *matCellDef="let element">{{ element.speed }}</td>
   </ng-container>
 
   <ng-container matColumnDef="total">
-    <th mat-header-cell *matHeaderCellDef>Total</th>
+    <th mat-sort-header="total" mat-header-cell *matHeaderCellDef>Total</th>
     <td mat-cell *matCellDef="let element">{{ element.total }}</td>
   </ng-container>
 
