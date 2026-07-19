@@ -6,23 +6,14 @@ import {
   viewChild,
   AfterViewInit,
   effect,
+  computed,
 } from '@angular/core';
 import { PokemonRow } from '../../services/models/pokemon-row';
 import { Input } from '@angular/core';
-import {
-  MatTable,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatCell,
-  MatCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-} from '@angular/material/table';
+import { MatTable, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatCell, MatCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatFooterRow } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { Chart, registerables } from 'chart.js';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 Chart.register(...registerables);
 
 @Component({
@@ -39,7 +30,8 @@ Chart.register(...registerables);
     MatRow,
     MatRowDef,
     MatSortModule,
-  ],
+    MatPaginatorModule,
+],
   templateUrl: './pokedex-table.html',
   styleUrl: './pokedex-table.css',
 })
@@ -171,6 +163,21 @@ export class PokedexTable  {
       },
     });
   }
+  }
+
+  // pagination
+  pageIndex = signal(0);
+  pageSize = signal(10);
+
+  paginatedData = computed(() => {
+    const data = this.sortedData();
+    const start = this.pageIndex() * this.pageSize();
+    return data.slice(start, start + this.pageSize());
+  })
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize)
   }
 }
 

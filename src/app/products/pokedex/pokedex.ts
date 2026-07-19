@@ -55,6 +55,7 @@ export class Pokedex {
           this.store.setOffset(offset);
         },
       });
+    
   }
 
   // searchbar section
@@ -63,7 +64,7 @@ export class Pokedex {
   protected readonly liveSearch = toSignal(this.searchControl.valueChanges, { initialValue: '' });
 
   constructor() {
-    this.fetchPokemon(0, 10);
+    this.fetchPokemon(0, 898);
   }
 
   protected readonly filteredPokemon = computed((): PokemonRow[] => {

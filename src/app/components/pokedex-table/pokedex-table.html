@@ -1,4 +1,4 @@
-<table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="sortedData()"
+<table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="paginatedData()"
   class=" border-solid border-black border! mt-5 ml-4 rounded-3xl!">
   <ng-container matColumnDef="sprite">
     <th mat-sort-header="sprite" mat-header-cell *matHeaderCellDef>Sprite</th>
@@ -48,6 +48,9 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onClickRow(row)"></tr>
 </table>
+<mat-paginator [length]="sortedData().length" [pageSize]="pageSize()" [pageSizeOptions]="[10, 25, 50]"
+  (page)="onPageChange($event)" class="border-solid border-black border! rounded-b-3xl!">
+</mat-paginator>
 
 <div class="fixed inset-0 bg-black/30 z-10 transition-opacity duration-300"
   [class.opacity-100]="selectedPokemon() !== null" [class.opacity-0]="selectedPokemon() === null"
