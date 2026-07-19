@@ -13,8 +13,7 @@ import { PokedexTable } from '../../components/pokedex-table/pokedex-table';
 import { PokemonRow } from '../../services/models/pokemon-row';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
-import { Observable, startWith, map, debounceTime, distinctUntilChanged } from 'rxjs';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-pokedex',
@@ -26,6 +25,7 @@ import { Observable, startWith, map, debounceTime, distinctUntilChanged } from '
     FormsModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './pokedex.html',
   styleUrl: './pokedex.css',

@@ -1,26 +1,25 @@
 @if (loading()) {
-<div class="loading-spinner">Loading Pokemon...</div>
+  <div class="w-full h-full flex justify-center items-center">
+    <mat-spinner class=""></mat-spinner>
+  </div>
 } @else if (error()) {
-<div class="error">{{ error() }}</div>
+<div class="error bg-red-50 border-solid border-red-400 border! text-red-700 rounded-xl! px-4 py-3 mt-4 ml-4" >
+  {{ error() }}
+</div>
 } @else {
 
 <div class="max-w-2xl px-4 py-6 ml-8">
 
   <mat-form-field appearance="outline" class="w-full">
-  <mat-label>Search Pokemon</mat-label>
-  <input
-    matInput
-    [formControl]="searchControl"
-    [matAutocomplete]="auto"
-    placeholder="Search by name or type..."
-    aria-label="Search"
-  />
-  <mat-autocomplete #auto="matAutocomplete">
-    @for (name of filteredNames(); track name) {
+    <mat-label>Search Pokemon</mat-label>
+    <input matInput [formControl]="searchControl" [matAutocomplete]="auto" placeholder="Search by name or type..."
+      aria-label="Search" />
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (name of filteredNames(); track name) {
       <mat-option [value]="name">{{ name }}</mat-option>
-    }
-  </mat-autocomplete>
-</mat-form-field>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
 
   <main class="mt-4">
     <app-pokedex-table [dataSource]="filteredPokemon()" />

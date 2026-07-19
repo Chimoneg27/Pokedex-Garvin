@@ -49,9 +49,6 @@ export class PokedexTable  {
     'total',
   ];
 
-  currentSort: Sort = { active: '', direction: '' };
-  sortedData = signal(this.dataSource.slice());
-
   ngOnChanges(changes: SimpleChanges) {
     if (changes['dataSource']) {
       this.applySort(this.currentSort);
@@ -174,6 +171,9 @@ export class PokedexTable  {
     const start = this.pageIndex() * this.pageSize();
     return data.slice(start, start + this.pageSize());
   })
+
+  currentSort: Sort = { active: '', direction: '' };
+  sortedData: any = signal(this.dataSource.slice());
 
   onPageChange(event: PageEvent) {
     this.pageIndex.set(event.pageIndex);
