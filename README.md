@@ -1,59 +1,83 @@
-# PokedexGarvin
+# Pokedex Garvin
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.7.
+A Pokédex and team-builder built with Angular 22, Angular Material, and a custom RxJS-based state layer (no NgRx/Akita/NgXS). Pokémon data comes live from the public [PokéAPI GraphQL endpoint](https://beta.pokeapi.co/graphql/v1beta); teams are managed against a local GraphQL API.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Pokédex browser** — searchable, filterable table of Pokémon (name, height, weight, type, color, base stats) fetched via Apollo GraphQL from PokéAPI.
+- **Team builder** — create named teams tied to a trainer ID, with team name uniqueness validation.
+- **Team list** — view and delete existing teams.
+- Client-side state managed through small `BehaviorSubject`-backed stores (`PokemonStore`, `TeamsStore`) exposed as observables/signals — built by hand instead of a state management library.
+- Server-side rendering (SSR) support via Angular's `@angular/ssr`.
 
-```bash
-ng serve
+## Tech stack
+
+- **Framework:** Angular 22 (standalone components, signals, `@if`/`@for` control flow)
+- **UI:** Angular Material + Tailwind CSS v4
+- **Data layer:** Apollo Angular / GraphQL (PokéAPI) + a local GraphQL API for teams
+- **State management:** Custom RxJS stores (`BehaviorSubject` + selectors), no NgRx/Akita/NgXS
+- **Testing:** Vitest
+
+## Prerequisites
+
+- Node.js (LTS) and npm
+- A local GraphQL server for team data, listening on `http://localhost:4000` (this repo does not include that server itself; `db/db.js` contains the seed data — trainers and teams — that such a server should read from, e.g. via a tool like [`json-graphql-server`](https://github.com/marmelab/json-graphql-server))
+
+## Getting started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the local GraphQL server for team data on port 4000, seeded from `db/db.js`. For example, with `json-graphql-server`:
+   ```bash
+   npx json-graphql-server db/db.js
+   ```
+
+3. Start the Angular dev server:
+   ```bash
+   npm start
+   ```
+
+4. Open `http://localhost:4200` in your browser. The app reloads automatically on source changes.
+
+Pokémon data itself requires no local server — it's fetched directly from PokéAPI's public GraphQL endpoint.
+
+## Available scripts
+
+| Command | Description |
+|---|---|
+| `npm start` | Runs `ng serve` — local dev server at `localhost:4200` |
+| `npm run build` | Production build, output to `dist/` |
+| `npm run watch` | Development build in watch mode |
+| `npm test` | Runs unit tests with Vitest |
+| `npm run serve:ssr:Pokedex-Garvin` | Serves the built SSR app (`node dist/Pokedex-Garvin/server/server.mjs`) |
+
+## Project structure
+
+```
+src/app/
+├── components/
+│   ├── header/            # Top nav bar
+│   └── pokedex-table/     # Reusable Pokémon table component
+├── products/
+│   ├── pokedex/           # Pokédex page: search + table, backed by PokemonStore
+│   └── teams/             # Team builder + list, backed by TeamsStore
+└── services/
+    ├── graphql/           # GraphQL queries/mutations (PokéAPI + teams API)
+    └── models/            # Shared TypeScript interfaces
+db/
+└── db.js                  # Seed data (trainers, teams) for the local teams GraphQL server
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Routes
 
-## Code scaffolding
+| Path | Component |
+|---|---|
+| `/` | Pokédex browser |
+| `/teams` | Team builder & team list |
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## License
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+See [LICENSE](./LICENSE).
