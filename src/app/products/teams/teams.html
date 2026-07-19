@@ -1,0 +1,58 @@
+@if(loading$()) {
+<div class="w-full h-screen flex justify-center items-center">
+  <mat-spinner></mat-spinner>
+</div>
+} @else if (error$()) {
+<div class="w-full h-screen flex justify-center items-center">
+  <div class="error bg-red-50 border-solid border-red-400 border! text-red-700 rounded-xl! px-4 py-3">
+    {{ error$() }}
+  </div>
+</div>
+} @else {
+<!-- Add team form -->
+<div class="min-h-screen flex justify-center">
+  <div class="w-[80%] flex flex-col items-center m-5 p-6">
+    <div class="form-box">
+      <form [formGroup]="teamForm" (ngSubmit)="createTeam()" class="form-box flex flex-col gap-2">
+        <h1 class="text-3xl m-2">Add your team</h1>
+
+        <input formControlName="name" placeholder="Team name" class="border! rounded-lg! px-3 py-2" />
+        @if (teamForm.get('name')?.invalid && teamForm.get('name')?.touched) {
+          @if (teamForm.get('name')?.hasError('notUnique')) {
+          <span class="text-red-600 text-sm">Name already exists</span>
+          } @else {
+          <span class="text-red-600 text-sm">Name is required</span>
+          }
+        }
+
+        <input formControlName="trainer_id" type="number" placeholder="Trainer ID"
+          class="border! rounded-lg! px-3 py-2" />
+        @if (teamForm.get('trainer_id')?.invalid && teamForm.get('trainer_id')?.touched) {
+        <span class="text-red-600 text-sm">Trainer ID is required</span>
+        }
+
+        <button type="submit" class="bg-blue-500 text-white rounded-lg! px-4 py-2">Create Team</button>
+      </form>
+    </div>
+
+<!-- Teams -->
+    <div class="w-full">
+      <h2 class="text-2xl mb-4">All Available Teams</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        @for(team of teams$(); track team.id) {
+        <div class="bg-white border-solid border-gray-200 border! rounded-xl! px-4 py-3 shadow-sm hover:shadow-md transition-shadow flex justify-between items-center">
+          <h2 class="text-lg font-semibold text-gray-800">{{ team.name }}</h2>
+          <button matButton (click)="[onDeleteTeam(team), deleteTeam()]"
+            class="bg-red-600! text-white! text-2xl! flex justify-center! items-center!">x</button>
+        </div>
+        } @empty {
+        <div class="col-span-full text-center text-gray-500 bg-gray-50 border-solid border-gray-200 border! rounded-xl! px-4 py-6">
+          There are no teams to view
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+}
