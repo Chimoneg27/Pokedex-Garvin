@@ -2,6 +2,10 @@
 
 A Pokédex and team-builder built with Angular 22, Angular Material, and a custom RxJS-based state layer (no NgRx/Akita/NgXS). Pokémon data comes live from the public [PokéAPI GraphQL endpoint](https://beta.pokeapi.co/graphql/v1beta); teams are managed against a local GraphQL API.
 
+## Live Demo
+
+🔗 [View the live demo](https://your-demo-url-here.com)
+
 ## Features
 
 - **Pokédex browser** — searchable, filterable table of Pokémon (name, height, weight, type, color, base stats) fetched via Apollo GraphQL from PokéAPI.
@@ -26,19 +30,19 @@ A Pokédex and team-builder built with Angular 22, Angular Material, and a custo
 ## Getting started
 
 1. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 2. Start the local GraphQL server for team data on port 4000, seeded from `db/db.js`. For example, with `json-graphql-server`:
-   ```bash
-   npx json-graphql-server db/db.js
-   ```
+```bash
+npx json-graphql-server db/db.js
+```
 
 3. Start the Angular dev server:
-   ```bash
-   npm start
-   ```
+```bash
+npm start
+```
 
 4. Open `http://localhost:4200` in your browser. The app reloads automatically on source changes.
 
