@@ -1,9 +1,9 @@
 @if (loading()) {
-  <div class="w-full h-full flex justify-center items-center">
-    <mat-spinner class=""></mat-spinner>
-  </div>
+<div class="w-full h-full flex justify-center items-center">
+  <mat-spinner class=""></mat-spinner>
+</div>
 } @else if (error()) {
-<div class="error bg-red-50 border-solid border-red-400 border! text-red-700 rounded-xl! px-4 py-3 mt-4 ml-4" >
+<div class="error bg-red-50 border-solid border-red-400 border! text-red-700 rounded-xl! px-4 py-3 mt-4 ml-4">
   {{ error() }}
 </div>
 } @else {
@@ -17,6 +17,11 @@
     <mat-autocomplete #auto="matAutocomplete">
       @for (name of filteredNames(); track name) {
       <mat-option [value]="name">{{ name }}</mat-option>
+      } @empty {
+      <div
+        class="w-full text-center text-gray-500 bg-gray-50 border-solid border-gray-200 border! rounded-xl! px-4 py-6 mt-4">
+        There are no pokemon to view
+      </div>
       }
     </mat-autocomplete>
   </mat-form-field>
