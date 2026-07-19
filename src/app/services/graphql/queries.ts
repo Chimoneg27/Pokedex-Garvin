@@ -46,3 +46,17 @@ export const GET_ABILITIES = gql`
     }
   }
 `;
+
+export const GET_TEAMS = `
+  query {
+    allTeams {
+      id
+      trainer_id
+      name
+      pokemon_ids
+      created_at
+    }
+  }
+`
+
+export const CREATE_TEAM = ``
