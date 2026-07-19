@@ -1,4 +1,12 @@
-import { Component, signal, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  signal,
+  SimpleChanges,
+  ElementRef,
+  viewChild,
+  AfterViewInit,
+  effect,
+} from '@angular/core';
 import { PokemonRow } from '../../services/models/pokemon-row';
 import { Input } from '@angular/core';
 import {
@@ -14,8 +22,8 @@ import {
   MatRowDef,
 } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
-import {Chart, registerables} from 'chart.js';
-Chart.register(...registerables)
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-pokedex-table',
@@ -35,7 +43,7 @@ Chart.register(...registerables)
   templateUrl: './pokedex-table.html',
   styleUrl: './pokedex-table.css',
 })
-export class PokedexTable {
+export class PokedexTable  {
   @Input() dataSource: PokemonRow[] = [];
   displayedColumns: string[] = [
     'sprite',
@@ -97,16 +105,72 @@ export class PokedexTable {
   }
 
   // card logic goes here
-  selectedPokemon = signal<PokemonRow | null>(null)
+  selectedPokemon = signal<PokemonRow | null>(null);
 
   onClickRow(pokemon: PokemonRow) {
-  this.selectedPokemon.set(
-    this.selectedPokemon()?.name === pokemon.name ? null : pokemon
-  );
-}
+    this.selectedPokemon.set(this.selectedPokemon()?.name === pokemon.name ? null : pokemon);
+  }
 
-   closeCard() {
+  closeCard() {
     this.selectedPokemon.set(null);
+  }
+
+  // this is for the charts
+  canvasRef = viewChild<ElementRef<HTMLCanvasElement>>('radarCanvas');
+  private chart: Chart | null = null;
+
+  constructor() {
+    effect(() => {
+      const pokemon = this.selectedPokemon();
+      const canvas = this.canvasRef();
+      if (pokemon && canvas) {
+        this.renderChart(pokemon, canvas.nativeElement);
+      } else if (this.chart) {
+        this.chart.destroy();
+        this.chart = null;
+      }
+    });
+  }
+
+  private renderChart(pokemon: PokemonRow, canvasEl: HTMLCanvasElement) {
+    const canvas = this.canvasRef();
+    if (!canvas) return;
+
+    const data = {
+      labels: ['SpAtk', 'SpDef', 'Attack', 'Speed', 'Hp'],
+      datasets: [
+        {
+          label: pokemon.name,
+          data: [pokemon.spAtk, pokemon.spDef, pokemon.attack, pokemon.speed, pokemon.hp],
+          fill: true,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgb(255, 99, 132)',
+          pointBackgroundColor: 'rgb(255, 99, 132)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgb(255, 99, 132)',
+        },
+      ],
+    };
+
+     if (this.chart && this.chart.canvas === canvasEl) {
+    // same canvas as before — just update the numbers
+    this.chart.data = data;
+    this.chart.update();
+  } else {
+    // no chart yet, or the old one belonged to a since-destroyed canvas
+    this.chart?.destroy();
+    this.chart = new Chart(canvasEl, {
+      type: 'radar',
+      data,
+      options: {
+        elements: { line: { borderWidth: 3 } },
+        animations: {
+          tension: { duration: 1000, easing: 'linear', from: 1, to: 0, loop: true },
+        },
+      },
+    });
+  }
   }
 }
 
