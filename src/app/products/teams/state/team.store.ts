@@ -48,5 +48,19 @@ export class TeamsStore {
   }
 
 
-  // setAddTeam
+  setAddTeam(team: TeamShape): void {
+    this.patchState({
+      teams: [...this.currentState.teams, team],
+      loading: false,
+      error: null
+    })
+  }
+
+  setRemoveTeam(id: number): void {
+    this.patchState({
+      teams: this.currentState.teams.filter((t) => t.id !== id),
+      loading: false,
+      error: null
+    })
+  }
 }

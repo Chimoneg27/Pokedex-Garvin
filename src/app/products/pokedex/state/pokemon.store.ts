@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, map } from "rxjs";
 import { PokemonRow } from "../../../services/models/pokemon-row";
 import { PokemonState } from "../../../services/models/pokemons-state";
 
@@ -22,6 +22,8 @@ export class PokemonStore {
   private get currentState(): PokemonState {
     return this.state$$.getValue();
   }
+
+  readonly pokemon$ = this.state$.pipe(map(state => state.pokemon))
 
   // merging logic
   private patchState(partial: Partial<PokemonState>): void {
